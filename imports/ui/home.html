@@ -1,0 +1,39 @@
+<template name="home">
+  <div class="container">
+    {{#if currentUser}}
+    <div class="row">
+        <div class="col-sm-8">
+          <h2>Hi {{currentUser.username}}!</h2>
+        </div>
+        <div class="col-sm-4">
+          <h5>Please log in to Facebook, so you can post to a page.</h5>
+          {{#if FBLoggedIn}}
+          <button class="btn btn-raised btn-info" id="FBlogout">Logout from Facebook</button>
+          {{else}}
+          <button class="btn btn-raised btn-info" id="FBlogin">Login to Facebook</button>
+          {{/if}}
+        </div>
+    </div>
+    {{#if FBLoggedIn}}
+      {{> pages}}
+    {{/if}}
+  {{else}}
+    <div class="row">
+        <div class="col-xs-12">
+          <h2>Error: Access denied. Please log in.</h2>
+        </div>
+    </div>
+  {{/if}}
+  </div>
+
+</template>
+
+<template name="pages">
+  <div class="row">
+    <div class="col-xs-12">
+      {{#each pages}}
+        <button class="btn btn-info"><a href="/post/{{id}}">{{name}}</a></button>
+      {{/each}}
+    </div>
+  </div>
+</template>

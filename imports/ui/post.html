@@ -1,0 +1,34 @@
+<template name="post">
+  <div class="container">
+    <div class="row">
+      {{#if currentUser}}
+      <div class="col-sm-12">
+        <!-- <form >
+          <button type="submit" class="btn btn-success btn-raised">Submit</button>
+        </form> -->
+        <div class="jumbotron">
+          <form id="new-post" class="form-horizontal">
+            <fieldset>
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <textarea class="form-control" rows="3" type="text" name="text" placeholder="Start writing your post here"></textarea>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-2 col-sm-offset-10">
+                  <button type="submit" class="btn btn-raised btn-danger">Publish</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+      {{else}}
+        <div class="col-xs-12">
+          <h2>Error: Access denied. Please log in.</h2>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</template>
