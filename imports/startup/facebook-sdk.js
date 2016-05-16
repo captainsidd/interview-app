@@ -1,3 +1,5 @@
+//on window load, run this Facebook code.
+//taken from Facebook's Javascript SDK quick start guide.
 window.fbAsyncInit = function() {
   FB.init({
     appId      : '1332359553445989',
