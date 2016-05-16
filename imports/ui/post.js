@@ -2,6 +2,9 @@ import { Template } from 'meteor/templating';
 
 import './post.html';
 
+Template.registerHelper('FBLoggedIn',function(input){
+  return Session.get('FBLoggedIn');
+});
 
 Template.post.events({
   'submit #new-post'(event) {
@@ -15,6 +18,16 @@ Template.post.events({
   },
 });
 
+function checkLoginStatus() {
+  FB.getLoginStatus(function(response) {
+    if (response.status === 'connected') {
+      setFBLoggedIn(true);
+    } else {
+      setFBLoggedIn(false);
+      Router.go('/home');
+    }
+  });
+};
 
 function postToPage(body) {
   FB.api('/'+ Router.current().params.page_id + '/feed', 'post', { message: body }, function(response) {
@@ -29,4 +42,8 @@ function postToPage(body) {
       }
     }
   });
+};
+
+function setFBLoggedIn(bool) {
+  Session.set('FBLoggedIn', bool)
 };

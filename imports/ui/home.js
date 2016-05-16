@@ -59,13 +59,13 @@ function checkLoginStatus() {
       setFBLoggedIn(false);
     }
   });
-}
+};
 
 function facebookLogout() {
   FB.logout(function(response) {
     setFBLoggedIn(false);
   });
-}
+};
 
 function setPages(response) {
   Session.set('pages', response.data)
