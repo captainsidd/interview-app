@@ -41,22 +41,32 @@ function checkLoginStatus() {
 
 //posts given message to the facebook page
 function postToPage(body) {
-  //posts given message using facebooks's GRAPH API to current page
-  FB.api('/'+ Router.current().params.page_id + '/feed', 'post', { message: body }, function(response) {
-    //if error or no response
-    if (!response || response.error) {
-      //log error and display alert
-      console.log(response.error);
-      alert('Error occured');
-    } else {
-      //log success message and display alert.
-      console.log(response);
-      if(response.id){
-        alert('Your post has been made! Go check it out.');
-        //go to home page
-        Router.go('/home');
+  var ACCESS_TOKEN;
+  //call API for all pages user manages
+  FB.api('/me/accounts', 'get', function(response) {
+    //iterate through data returned, matching the page id to find access token
+    for(var i = 0;i<response.data.length; i++){
+      if(response.data[i].id === Router.current().params.page_id){
+        ACCESS_TOKEN = response.data[i].access_token;
       }
     }
+    //posts given message using facebooks's GRAPH API to current page
+    FB.api('/'+ Router.current().params.page_id + '/feed', 'post', { access_token: ACCESS_TOKEN, message: body }, function(response) {
+      //if error or no response
+      if (!response || response.error) {
+        //log error and display alert
+        console.log(response.error);
+        alert('Error occured');
+      } else {
+        //log success message and display alert.
+        console.log(response);
+        if(response.id){
+          alert('Your post has been made! Go check it out at http://facebook.com/'+response.id);
+          //go to home page
+          Router.go('/home');
+        }
+      }
+    });
   });
 };
 
